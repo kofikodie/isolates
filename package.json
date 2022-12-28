@@ -1,0 +1,43 @@
+{
+  "name": "isolates",
+  "version": "1.0.0",
+  "description": "Serveless the hard way with v8 isolates",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "ts-start": "ts-node src/index.ts",
+    "start": "nodemon --watch src --ext ts -L --exec npm run ts-start",
+    "test": "jest --runInBand --forceExit --config jest.config.json ./tests",
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+    "fmt": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts)\"",
+    "vm": "ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kofikodie/isolates.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kofikodie/isolates/issues"
+  },
+  "homepage": "https://github.com/kofikodie/isolates#readme",
+  "dependencies": {
+    "isolated-vm": "^4.4.2",
+    "yaml": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.2.4",
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
+    "eslint": "^8.30.0",
+    "jest": "^29.3.1",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.1",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
+  }
+}

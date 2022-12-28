@@ -20,7 +20,7 @@ jobs:
       # Build the Docker image
       - name: Build the image
         run: |
-          docker build -t my-image .
+          docker-compose build -t isolates .
           docker tag isolates:latest 317884193661.dkr.ecr.eu-west-1.amazonaws.com/docker-ecr-repository/isolates:${{ steps.commit_sha.outputs.sha }}
 
       # Login to ECR

@@ -25,13 +25,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
       # Build the Docker image
-      - name: Build the image
+      - name: Build, tag, and push image to ECR 
         run: |
           docker-compose build -t ${{ secrets.ECR_REGISTRY }}/isolates:${{ steps.commit_sha.outputs.sha }} .
-
-      # Push the image to ECR
-      - name: Push the image to ECR
-        run: |
           docker push ${{ secrets.ECR_REGISTRY }}/isolates:${{ steps.commit_sha.outputs.sha }}
 
       # Clone the repository containing the Argo CI manifest

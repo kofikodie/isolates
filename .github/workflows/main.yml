@@ -32,6 +32,11 @@ jobs:
 
       # Build the Docker image
       - name: Build, tag, and push image to ECR 
+        uses: actions/checkout@v2
+        with:
+          repository: kofikodie/local-manifest
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: isolates

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata: # The metadata for the service
+  name: iso-svc # The name of the service
+spec:
+  type: NodePort
+  selector: # Selects the pods that are part of the Service
+    app: isolates
+  ports:
+    - port: 80 # The port that this service should serve on.
+      targetPort: 300 # This is the port that the container listens on
+      nodePort: 30080 # This is the port that the service will be exposed on

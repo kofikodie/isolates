@@ -1,5 +1,5 @@
 version: 1
 
 handlers:
-  - handler: src/handlers/printHello.js
+  - handler: handlers/printHello.js
     path: /printHello

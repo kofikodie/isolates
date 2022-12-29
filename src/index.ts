@@ -3,13 +3,14 @@ import fs from 'fs'
 import yaml from 'yaml'
 import { HandlerType } from './types/handler.type'
 import express from 'express'
+import path from 'path'
 
 const serverlessConfig: HandlerType = yaml.parse(
-    fs.readFileSync('./src/serverless.yml', 'utf8')
+    fs.readFileSync(path.resolve(__dirname, 'serverless.yml'), 'utf8')
 )
 
-const handlerScript = serverlessConfig.handlers.map(handler => {
-    const code = fs.readFileSync(`${handler.handler}`, 'utf8')
+const handlerScript = serverlessConfig.handlers.map(handler => {    
+    const code = fs.readFileSync(path.resolve(__dirname, `${handler.handler}`), 'utf8')
 
     const isolate = new ivm.Isolate({ memoryLimit: 8 /* MB */ })
     const script = isolate.compileScriptSync(code)

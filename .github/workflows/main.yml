@@ -34,7 +34,7 @@ jobs:
       - name: Build, tag, and push image to ECR 
         uses: actions/checkout@v2
         with:
-          repository: kofikodie/local-manifest
+          repository: kofikodie/isolates
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
         env:

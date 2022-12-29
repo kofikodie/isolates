@@ -47,6 +47,8 @@ jobs:
           repository: kofikodie/local-manifest
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
+          persist_credentials: false
+          fetch-depth: 0
 
       # Update the Argo CI manifest
       - name: Update the Argo CI manifest
@@ -57,7 +59,7 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git add iso-ds.yml
-          git commit -m "Bump docker tag"
+          git commit -a -m "Bump docker tag"
 
       # Push the updated manifest to the repository
       - name: Push the updated manifest to the repository

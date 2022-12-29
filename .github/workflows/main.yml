@@ -44,6 +44,7 @@ jobs:
       - name: Update Argo CI manifest
         run: |
           git clone https://github.com/kofikodie/local-manifest.git
+          cd local-manifest
           cd charts
           cd isolates
           sed -i "s|image: 123456789012.dkr.ecr.eu-west-1.amazonaws.com/isolates:.*|image: 123456789012.dkr.ecr.eu-west-1.amazonaws.com/isolates:${{ steps.commit_sha.outputs.sha }}|g" argo-ci.yaml

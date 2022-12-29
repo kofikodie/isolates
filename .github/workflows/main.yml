@@ -56,14 +56,9 @@ jobs:
           cd charts
           cd isolates
           sed -i "s|image: .*|image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-image:${{ steps.commit_sha.outputs.sha }}|" iso-ds.yml
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git add iso-ds.yml
-          git commit -a -m "Bump docker tag"
 
-      # Push the updated manifest to the repository
-      - name: Push the updated manifest to the repository
-        uses: ad-m/github-push-action@master
+      - name: Commit and push changes
+        uses: devops-infra/action-commit-push@v0.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          commit_message: Version updated

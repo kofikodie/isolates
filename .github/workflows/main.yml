@@ -34,7 +34,7 @@ jobs:
       - name: Build, tag, and push image to ECR 
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          ECR_REPOSITORY: isolates
           IMAGE_TAG: ${{ steps.commit_sha.outputs.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.commit_sha.outputs.sha }} -f ./docker/dev/node/Dockerfile .

@@ -8,5 +8,5 @@ spec:
     app: isolates
   ports:
     - port: 80 # The port that this service should serve on.
-      targetPort: 300 # This is the port that the container listens on
+      targetPort: 3000 # This is the port that the container listens on
       nodePort: 30080 # This is the port that the service will be exposed on

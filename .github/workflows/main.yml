@@ -52,7 +52,7 @@ jobs:
       - name: Update the Argo CI manifest
         run: |
           cd charts
-          ls
+          cd isolates
           sed -i "s|image: .*|image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-image:${{ steps.commit_sha.outputs.sha }}|" iso-ds.yaml
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"

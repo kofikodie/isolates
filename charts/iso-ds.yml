@@ -1,0 +1,24 @@
+## write a deployment spec for the isolates service
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: isolates
+  labels:
+    app: isolates
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: isolates
+  template:
+    metadata:
+      labels:
+        app: isolates
+    spec:
+      containers:
+      - name: isolates
+        image: 317884193661.dkr.ecr.eu-west-1.amazonaws.com/isolates:toBeReplaced
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

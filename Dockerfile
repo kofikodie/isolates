@@ -15,6 +15,9 @@ RUN apk add g++ make py3-pip
 WORKDIR /app
 
 COPY --from=builder ./app/dist ./dist
+COPY --from=builder ./app/src/serverless.yml ./dist/src/
+COPY --from=builder ./app/src/handlers ./dist/src/handlers
+
 COPY package*.json ./
 RUN npm install --omit=dev
 CMD [ "npm", "start" ]

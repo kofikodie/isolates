@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: isolates
-        image: 317884193661.dkr.ecr.eu-west-1.amazonaws.com/isolates:bb1d345a79235577fb0217f9af702f2d18967335
+        image: 317884193661.dkr.ecr.eu-west-1.amazonaws.com/isolates:623dec4b8326d33620b76799086dcecfd879d174
         imagePullPolicy: Always
         ports:
         - containerPort: 80

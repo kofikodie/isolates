@@ -56,7 +56,7 @@ jobs:
           sed -i "s|image: .*|image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-image:${{ steps.commit_sha.outputs.sha }}|" iso-ds.yml
 
       - name: Commit and push changes
-        uses: devops-infra/action-commit-push@v0.3
+        uses: devops-infra/action-commit-push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_message: Bump image tag to ${{ steps.commit_sha.outputs.sha }}

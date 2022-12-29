@@ -47,8 +47,6 @@ jobs:
           repository: kofikodie/local-manifest
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
-          persist_credentials: false
-          fetch-depth: 0
 
       # Update the Argo CI manifest
       - name: Update the Argo CI manifest
@@ -61,4 +59,5 @@ jobs:
         uses: devops-infra/action-commit-push@v0.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_message: Version updated
+          commit_message: Bump image tag to ${{ steps.commit_sha.outputs.sha }}
+          force: true

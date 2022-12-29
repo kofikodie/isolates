@@ -4,9 +4,9 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./docker/node/Dockerfile
     ports:
       - "3000:3000"
     volumes:
       - .:/app
-      - /app/node_modules
+    command: ["npm", "run", "start:dev"]

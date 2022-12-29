@@ -1,0 +1,5 @@
+version: 1
+
+handlers:
+  - handler: src/handlers/printHello.js
+    path: /printHello

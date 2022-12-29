@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "ts-start": "ts-node src/index.ts",
-    "start": "nodemon --watch src --ext ts -L --exec npm run ts-start",
+    "ts:start": "ts-node src/index.ts",
+    "build": "tsc --build tsconfig.json",
+    "start": "node dist/index.js",
+    "start:dev": "nodemon --watch src --ext ts -L --exec npm run ts:start",
     "test": "jest --runInBand --forceExit --config jest.config.json ./tests",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-    "fmt": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts)\"",
-    "vm": "ts-node src/index.ts"
+    "fmt": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts)\""
   },
   "repository": {
     "type": "git",
@@ -24,10 +25,12 @@
   },
   "homepage": "https://github.com/kofikodie/isolates#readme",
   "dependencies": {
+    "express": "^4.18.2",
     "isolated-vm": "^4.4.2",
     "yaml": "^2.2.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.15",
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.47.1",

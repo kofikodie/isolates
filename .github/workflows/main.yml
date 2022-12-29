@@ -40,24 +40,15 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.commit_sha.outputs.sha }}
 
-      # Clone the repository containing the Argo CI manifest
-      - name: Clone the manifest repository
-        uses: actions/checkout@v2
-        with:
-          repository: kofikodie/local-manifest
-          ref: main
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      # Update the Argo CI manifest
-      - name: Update the Argo CI manifest
+      # Clone the repository containing the Argo CI manifest, update the image tag and push the changes
+      - name: Update Argo CI manifest
         run: |
+          git clone https://github.com/kofikodie/local-manifest.git
           cd charts
           cd isolates
-          sed -i "s|image: .*|image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-image:${{ steps.commit_sha.outputs.sha }}|" iso-ds.yml
-
-      - name: Commit and push changes
-        uses: devops-infra/action-commit-push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_message: Bump image tag to ${{ steps.commit_sha.outputs.sha }}
-          force: true
+          sed -i "s|image: 123456789012.dkr.ecr.eu-west-1.amazonaws.com/isolates:.*|image: 123456789012.dkr.ecr.eu-west-1.amazonaws.com/isolates:${{ steps.commit_sha.outputs.sha }}|g" argo-ci.yaml
+          git config --global user.email "
+          git config --global user.name "GitHub Actions"
+          git add .
+          git commit -m "Update Argo CI manifest"
+          git push origin main

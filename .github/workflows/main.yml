@@ -30,9 +30,6 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
   
-      # Checkout the repository
-      - uses: actions/checkout@v2
-  
       # Build the Docker image
       - name: Build, tag, and push image to ECR 
         env:
@@ -40,7 +37,7 @@ jobs:
           ECR_REPOSITORY: isolates
           IMAGE_TAG: ${{ steps.commit_sha.outputs.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./docker/dev/node/Dockerfile .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.commit_sha.outputs.sha }}
 
       # Clone the repository containing the Argo CI manifest

@@ -13,6 +13,6 @@ FROM node:18-alpine3.16 AS final
 WORKDIR /app
 
 COPY --from=builder ./app/dist ./dist
-COPY package*.json .
+COPY package*.json ./
 RUN npm install --production
 CMD [ "npm", "start" ]

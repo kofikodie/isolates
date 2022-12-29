@@ -57,10 +57,11 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git add iso-ds.yml
-          git commit -m "Update Argo CI manifest"
+          git commit -m "Bump docker tag"
 
       # Push the updated manifest to the repository
-      - name: Push the updated manifest
+      - name: Push the updated manifest to the repository
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main

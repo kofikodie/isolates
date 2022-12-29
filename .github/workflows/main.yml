@@ -30,6 +30,9 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
   
+      # Checkout the repository
+      - uses: actions/checkout@v2
+  
       # Build the Docker image
       - name: Build, tag, and push image to ECR 
         env:
@@ -37,7 +40,7 @@ jobs:
           ECR_REPOSITORY: isolates
           IMAGE_TAG: ${{ steps.commit_sha.outputs.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./docker/dev/node/Dockerfile .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.commit_sha.outputs.sha }}
 
       # Clone the repository containing the Argo CI manifest
@@ -53,10 +56,10 @@ jobs:
         run: |
           cd charts
           cd isolates
-          sed -i "s|image: .*|image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-image:${{ steps.commit_sha.outputs.sha }}|" iso-ds.yaml
+          sed -i "s|image: .*|image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-image:${{ steps.commit_sha.outputs.sha }}|" iso-ds.yml
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git add iso-ds.yaml
+          git add iso-ds.yml
           git commit -m "Update Argo CI manifest"
 
       # Push the updated manifest to the repository

@@ -37,7 +37,7 @@ jobs:
           ECR_REPOSITORY: isolates
           IMAGE_TAG: ${{ steps.commit_sha.outputs.sha }}
         run: |
-          docker-compose build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.commit_sha.outputs.sha }}  .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.commit_sha.outputs.sha }}  .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ steps.commit_sha.outputs.sha }}
 
       # Clone the repository containing the Argo CI manifest

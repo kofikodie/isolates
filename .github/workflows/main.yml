@@ -30,13 +30,16 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      # Build the Docker image
-      - name: Build, tag, and push image to ECR 
+      # Checkout the repository containing the Dockerfile
+      - name: Checkout the Dockerfile repository
         uses: actions/checkout@v2
         with:
           repository: kofikodie/isolates
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
+  
+      # Build the Docker image
+      - name: Build, tag, and push image to ECR 
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: isolates

@@ -4,16 +4,19 @@ metadata:
   name: iso-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
   rules:
-  - host: ad6e23119e5764ff384b4b37156954da-df90059a4a9ee9e1.elb.eu-west-1.amazonaws.com
+  - host: a9a6e93bd7dd44c639d7aea705951458-3f9cf77a8b59e5fb.elb.eu-west-1.amazonaws.com
     http:
       paths:
       - path: /ita
+        pathType: Prefix
         backend:
           serviceName: iso-svc-ita
           port:
             number: 80
       - path: /eng
+        pathType: Prefix
         backend:
           serviceName: iso-svc
           port:

@@ -1,3 +1,3 @@
 (function () {
-    return 'Ciao! Sono una funzione che stampa "Ciao" in italiano!'
+    return "{message: 'Ciao Mondo!'}"
 })()

@@ -12,12 +12,14 @@ spec:
       - path: /ita
         pathType: Prefix
         backend:
-          serviceName: iso-svc-ita
-          port:
-            number: 80
+          service:
+            name: iso-svc-ita
+            port:
+              number: 80
       - path: /eng
         pathType: Prefix
         backend:
-          serviceName: iso-svc
-          port:
-            number: 80
+          service:
+            name: iso-svc
+            port:
+              number: 80

@@ -3,9 +3,6 @@ Serveless the hard way with v8 isolates
 
 ## What is this?
 
-This is a proof of concept of how to use v8 isolates to run code in a sandboxed environment.
+An isolate is an independent copy of the V8 runtime, and it includes a heap manager, a garbage collector. Only one thread may access a given isolate at a time, but different threads may access different isolates simultaneously.
 
-### What is a v8 isolate?
-An Isolate is an independant copy of the V8 runtime which includes its own heap. Two different Isolates can run in parallel and can be seen as entirely different sandboxed instances of a V8 runtime.
-
-
+An isolate is not sufficient for running scripts, however. You also need a global (root) object. A context defines a complete script execution environment by designating an object in an isolate's heap as a global object.

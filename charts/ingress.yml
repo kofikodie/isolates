@@ -2,19 +2,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: iso-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
-  - host: a9a6e93bd7dd44c639d7aea705951458-3f9cf77a8b59e5fb.elb.eu-west-1.amazonaws.com
-    http:
+  - http:
       paths:
-      - path: /ita
-        pathType: Prefix
-        backend:
-          service:
-            name: iso-svc-ita
-            port:
-              number: 80
-      - path: /eng
+      - path: /
         pathType: Prefix
         backend:
           service:

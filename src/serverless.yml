@@ -4,4 +4,4 @@ handlers:
   - handler: handlers/printHello.js
     path: /printHello
   - handler: handlers/printHelloIta.js
-    path: /printHello
+    path: /stampaCiao

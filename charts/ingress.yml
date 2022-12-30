@@ -2,8 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: iso-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: a9a6e93bd7dd44c639d7aea705951458-3f9cf77a8b59e5fb.elb.eu-west-1.amazonaws.com

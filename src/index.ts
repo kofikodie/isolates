@@ -22,7 +22,18 @@ const handlerScript = serverlessConfig.handlers.map(handler => {
     }
 })
 
-const app = express()
+//create an express server api for each handler
+handlerScript.forEach((handler, index) => {
+    const port = 3000 + index
+    express()
+        .get(handler.path, (_, res) => {
+            res.send(handler.script)
+        })
+        .listen(port, () => {
+            console.log(`Server running on port ${port}`)
+        })
+})
+/*const app = express()
 
 handlerScript.forEach(handler => {
     app.get(handler.path, (_, res) => {
@@ -32,4 +43,4 @@ handlerScript.forEach(handler => {
 
 app.listen(3000, () => {
     console.log('Server running on port 3000')
-})
+})*/

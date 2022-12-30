@@ -3,3 +3,5 @@ version: 1
 handlers:
   - handler: handlers/printHello.js
     path: /printHello
+  - handler: handlers/printHelloIta.js
+    path: /printHello

@@ -34,8 +34,7 @@ const lambdas = handlerScript.map(handler => {
 
         response.statusCode = 200
         response.setHeader('Content-Type', 'application/json')
-        response.end(script)
-        return
+        response.end(JSON.parse(JSON.stringify(script)))
     }
 
     return {

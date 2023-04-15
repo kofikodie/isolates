@@ -22,46 +22,36 @@ const handlerScript = serverlessConfig.handlers.map(handler => {
 })
 
 const lambdas = handlerScript.map(handler => {
-    const func = (
-        request: http.IncomingMessage,
+    const func = async (
+        parameter: string,
         response: http.ServerResponse
     ) => {
         const { code } = handler
-
-        /*const isolate = new ivm.Isolate;
-        const context = isolate.createContextSync();
-        const global = context.global;
-        global.setSync('global', global.derefInto());
-        isolate.compileScriptSync(`global.run = (request) => ${code}`).runSync(context);*/
-
         const isolate = new ivm.Isolate({ memoryLimit: 8 });
-
         const context =  isolate.createContextSync();
 
-        const script =  isolate.compileScriptSync(code);
-        script.runSync(context);
+        const memBefore = process.memoryUsage().heapUsed / (1024 * 1024);
 
-        const input = new ivm.ExternalCopy({
-            Subreddit: 'r/test',
-            Title: 'my title',
-            Content: 'my content',
-            PostUrl: 'www.ifttt.com'
-        })
+        const jail = context.global;
+        const functionCode = new Function(`return ${code}`)();
+        jail.setSync('handlerFunction', functionCode);
 
-        const fnReference =  context.global.getSync('lambdaHandler');
-        console.log(`${fnReference}`)
+        const res = context.evalSync(`handlerFunction(${JSON.stringify(parameter)})`);
 
-        fnReference.applySync(undefined, [input], {
-            timeout: 3000,
-            promise: true,
-            reference: {
-                copy: true
-            }
-        });
+        const stats = await isolate.getHeapStatistics();
+        console.log(stats);
 
-        response.statusCode = 200
-        response.setHeader('Content-Type', 'application/json')
-        response.end(JSON.parse(JSON.stringify("res")))
+        const memAfter = process.memoryUsage().heapUsed / (1024 * 1024);
+        const memDiff = memAfter - memBefore;
+
+        console.log(`Memory used before execution: ${memBefore.toFixed(2)} MB`);
+        console.log(`Memory used after execution: ${memAfter.toFixed(2)} MB`);
+        console.log(`Memory difference: ${memDiff.toFixed(2)} MB`);
+
+        response.statusCode = 200;
+        response.setHeader('Content-Type', 'application/json');
+        response.end(JSON.stringify({ res }));
+        isolate.dispose();
     }
 
     return {
@@ -70,15 +60,25 @@ const lambdas = handlerScript.map(handler => {
     }
 })
 
-//https://github.com/EarlMadSec/minTAP/blob/ee00b538fc77dee16db8575d56efb08a0a66aaa1/Server/isolated_server/test.js
-http.createServer((request, response) => {
-    const { url } = request
-
-    const lambda = lambdas.find(lambda => lambda.path === url)
-    if (lambda) {
-        lambda.handler(request, response)
-    } else {
-        response.statusCode = 404
-        response.end()
+http.createServer(async (request, response) => {
+    const { url } = request;
+    if (!url) {
+        response.statusCode = 404;
+        response.end();
+        return;
     }
-}).listen(3000)
+
+    const urlParts = url.split("/");
+    const path = urlParts[1];
+    const parameter = urlParts[2];
+
+    const lambda = lambdas.find(lambda => lambda.path === `/${path}`);
+
+    if (lambda) {
+        // Pass the parameter to the lambda function as an argument
+        await lambda.handler(parameter, response);
+    } else {
+        response.statusCode = 404;
+        response.end();
+    }
+}).listen(3000);
